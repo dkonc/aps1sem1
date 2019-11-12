@@ -12,6 +12,9 @@ public class Naloga1{
 		int visina = Integer.parseInt(stevilke[1]);
 
 
+
+
+
     }
 
 }
