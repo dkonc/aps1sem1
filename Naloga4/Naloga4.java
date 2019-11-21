@@ -27,7 +27,17 @@ public class Naloga4{
                         vrece[imeTabele].addLast(element);
                     }
                 }
-                vrece[imeTabele].write();
+                vrece[imeTabele].sort();
+                //vrece[imeTabele].write();
+            }
+            if(ukazi[0].equals("Z")){
+                int vreca1 = Integer.parseInt(ukazi[1]);
+                int vreca2 = Integer.parseInt(ukazi[2]);
+                vrece[vreca1].zdruzi(vreca1,vreca2,vrece);
+                vrece[vreca1].write();
+                vrece[vreca2].write();
+
+                
             }
         }
     }
@@ -60,6 +70,59 @@ class LinkedList{
         last = null;
     }
 
+    public void sort(){
+        LinkedListElement current = first, index = null;  
+        int temp;  
+          
+        if(first == null) {  
+            return;  
+        }  
+        else {  
+            while(current != null) {  
+                index = current.next;  
+                  
+                while(index != null) {  
+                    if(current.idx > index.idx) {  
+                        temp = current.idx;  
+                        current.idx = index.idx;  
+                        index.idx = temp;  
+                    }  
+                    index = index.next;  
+                }  
+                current = current.next;  
+            }      
+        }  
+
+    }
+    public void zdruzi(int vreca1, int vreca2,LinkedList[] vrece){
+        LinkedListElement result = null;
+        LinkedListElement head = null;
+        
+        while(vrece[vreca1].first.next != null || vrece[vreca2].first.next != null) {
+        int minVal;
+        if (vrece[vreca1].first.next == null) {
+            minVal = vrece[vreca2].first.next.idx;
+            vrece[vreca2].first.next = vrece[vreca2].first.next.next;
+        } else if (vrece[vreca2].first.next == null) {
+            minVal = vrece[vreca1].first.next.idx;
+            vrece[vreca1].first.next = vrece[vreca1].first.next.next;
+        } else if(vrece[vreca1].first.idx <= vrece[vreca2].first.next.idx) {
+            minVal = vrece[vreca1].first.idx;
+            vrece[vreca1].first = vrece[vreca1].first.next;
+        } else {
+            minVal = vrece[vreca2].first.next.idx;
+            vrece[vreca2].first.next = vrece[vreca2].first.next.next;
+        }
+
+        if(result == null) {
+            result = head = new LinkedListElement(minVal);
+        } else {
+            result.next = new LinkedListElement(minVal);
+            result = result.next;
+        }
+        }
+        vrece[vreca1].first = head;
+    }
     public void preslikaj(char op, int val){
         if(Character.toString(op).equals("+")){
             LinkedListElement el = first.next;
